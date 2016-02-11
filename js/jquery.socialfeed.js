@@ -262,7 +262,7 @@ if (typeof Object.create !== 'function') {
 								limit: options.facebook.adjustedLimit
 							}, 
 							function(response) {
-								
+								console.log(response);
 								if (typeof response.error != "undefined" && typeof response.error.code != "undefined" && response.error.code == 1){
 
 									FB.api(
@@ -292,7 +292,7 @@ if (typeof Object.create !== 'function') {
 							if (element.object_id) {
 								image_url = Feed.facebook.graph + element.object_id + '/picture/?type=normal&w=1000&access_token='+options.facebook.access_token;
 							}
-							else if (image_url.indexOf('_b.') != -1) {
+							else if (image_url.indexOf('_b.') != -1 || image_url.indexOf('scontent.xx.fbcdn.net') != -1) {
 								//do nothing it is already big
 							} else if (image_url.indexOf('safe_image.php') != -1) {
 								image_url = Feed.facebook.utility.getExternalImageURL(image_url, 'url');
@@ -346,8 +346,7 @@ if (typeof Object.create !== 'function') {
 							post.message = (text) ? text : '';
 							post.description = (element.description) ? element.description : '';
 							post.link = (element.link) ? element.link : 'http://facebook.com/' + element.from.id;
-							post.link = (post.link.indexOf("http") == -1) ? 'http://facebook.com/' + post.link : post.link;
- 
+
 							if (options.show_media === true) {
 								if (element.picture) {
 									attachment = Feed.facebook.utility.prepareAttachment(element);
